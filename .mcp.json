@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "figma-mcp-go": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@vkhanhqui/figma-mcp-go@latest"
+      ],
+      "env": {}
+    },
+    "figma-mcp-node": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "/Users/marcus/development/projects/figma-mcp-node/dist/bin.js"
+      ],
+      "env": {}
+    }
+  }
+}

@@ -1,11 +1,9 @@
 {
   "servers": {
-    "MCPMagic": {
+    "figma-mcp-go": {
       "type": "stdio",
       "command": "node",
-      "args": [
-        "/Users/marcus/Library/Containers/kr.co.metadata.mcp/Data/Library/Application Support/MCP Magic/mcp-server.cjs"
-      ]
+      "args": ["/Users/marcus/development/projects/figma-mcp-node/dist/bin.js"]
     }
   }
 }

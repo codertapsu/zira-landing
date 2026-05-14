@@ -1,26 +1,63 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-ink: #252b42;
+  --color-ink-soft: #737373;
+  --color-ink-strong: #0f172a;
+  --color-line: #e2e8f0;
+  --color-surface: #ffffff;
+  --color-surface-soft: #fafafa;
+
+  --color-brand-50: #fff8e1;
+  --color-brand-100: #ffeebf;
+  --color-brand-400: #fbbc05;
+  --color-brand-500: #f0a800;
+  --color-brand-600: #c98a00;
+
+  --color-accent-500: #ec5c2e;
+  --color-accent-600: #d24a1f;
+
+  --font-sans: var(--font-cabin), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-cabin), ui-sans-serif, sans-serif;
+  --font-ui: var(--font-roboto), var(--font-cabin), ui-sans-serif, sans-serif;
+
+  --radius-card: 14px;
+  --radius-pill: 999px;
+  --shadow-card: 0 18px 40px -22px rgba(37, 43, 66, 0.18);
+  --shadow-soft: 0 6px 18px -10px rgba(37, 43, 66, 0.15);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #ffffff;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--color-brand-400);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.testimonials-scroller {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-padding-inline: 24px;
+}
+
+.testimonials-scroller::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .testimonials-scroller {
+    scroll-padding-inline: 0;
+  }
 }
