@@ -38,24 +38,22 @@ export function Testimonials() {
             id="testimonials-heading"
             className="font-display text-[28px] font-semibold leading-tight tracking-tight text-[color:var(--color-ink)] sm:text-4xl"
           >
-            Testimonials from
-            <br /> our members
+            Các đội nhóm
+            <br /> đang dùng Zira mỗi ngày
           </h2>
           <p className="max-w-md text-sm leading-relaxed text-[color:var(--color-ink-soft)]">
-            Embrace life&apos;s vastness, venture forth, and discover the
-            wonders waiting beyond. The world beckons; seize its grand offerings
-            now!
+            Lắng nghe câu chuyện thật từ những trưởng nhóm, quản lý dự án và thành viên đang sử dụng Zira để tổ chức công việc, theo dõi tiến độ và phối hợp ngay trong Zalo.
           </p>
 
           <div
             className="mt-2 flex gap-3"
             role="group"
-            aria-label="Testimonial navigation"
+            aria-label="Điều hướng đánh giá"
           >
             <button
               type="button"
               onClick={() => scrollByCards(-1)}
-              aria-label="Previous testimonial"
+              aria-label="Đánh giá trước"
               className="grid h-10 w-10 place-items-center rounded-full bg-[#e9fffa] text-[color:var(--color-brand-500)] transition-colors duration-150 hover:bg-[#d3f4ed]"
             >
               <Icon name="chevron-left" width={20} height={20} />
@@ -63,7 +61,7 @@ export function Testimonials() {
             <button
               type="button"
               onClick={() => scrollByCards(1)}
-              aria-label="Next testimonial"
+              aria-label="Đánh giá kế tiếp"
               className="grid h-10 w-10 place-items-center rounded-full bg-[color:var(--color-brand-400)] text-white transition-colors duration-150 hover:bg-[color:var(--color-brand-500)]"
             >
               <Icon name="chevron-right" width={20} height={20} />
@@ -75,7 +73,7 @@ export function Testimonials() {
           <ol
             ref={scrollerRef}
             aria-roledescription="carousel"
-            aria-label="Customer testimonials"
+            aria-label="Đánh giá của người dùng Zira"
             tabIndex={0}
             className="testimonials-scroller flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-6 pb-4 pt-1 sm:px-8 lg:pl-0 lg:pr-12"
           >
