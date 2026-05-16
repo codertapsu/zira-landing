@@ -21,6 +21,7 @@ const softwareJsonLd = {
   operatingSystem: "Zalo Mini App, Web",
   inLanguage: "vi-VN",
   url: siteUrl,
+  image: `${siteUrl}/og-image.png`,
   description:
     "Zira là Zalo Mini App giúp quản lý công việc, dự án, nhiệm vụ, lịch, ghi chú và báo cáo trên di động. Dành cho đội nhóm vừa và nhỏ, dùng ngay trong Zalo.",
   featureList: [
