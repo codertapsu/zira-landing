@@ -5,6 +5,7 @@ import type { StaticImageData } from 'next/image';
 import { Container } from '@/components/ui/Container';
 import { Icon } from '@/components/ui/Icon';
 import { PhoneMockup } from '@/components/ui/PhoneMockup';
+import { Reveal } from '@/components/ui/Reveal';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { featureTour, type FeatureTourSlide } from '@/lib/content';
 
@@ -72,17 +73,20 @@ export function FeatureTour() {
   return (
     <section id="feature-tour" aria-labelledby="feature-tour-heading" className="bg-white py-20 sm:py-24">
       <Container className="flex flex-col gap-14">
-        <SectionHeader
-          title={<span id="feature-tour-heading">Khám phá Zira qua từng màn hình</span>}
-          description="Lướt qua các tính năng quan trọng nhất — từ tổng quan công việc trong ngày đến báo cáo dự án và bản vẽ cộng tác."
-        />
+        <Reveal>
+          <SectionHeader
+            title={<span id="feature-tour-heading">Khám phá Zira qua từng màn hình</span>}
+            description="Lướt qua các tính năng quan trọng nhất — từ tổng quan công việc trong ngày đến báo cáo dự án và bản vẽ cộng tác."
+          />
+        </Reveal>
 
-        <div
+        <Reveal
           tabIndex={0}
           role="region"
           aria-roledescription="carousel"
           aria-label="Hướng dẫn nhanh các tính năng Zira"
           onKeyDown={onKeyDown}
+          delay={0.1}
           className="grid items-center gap-12 rounded-3xl outline-none lg:grid-cols-[1fr_1fr]"
         >
           <div className="relative mx-auto flex h-[560px] w-full max-w-md items-center justify-center">
@@ -162,7 +166,7 @@ export function FeatureTour() {
               </div>
             </div>
           </div>
-        </div>
+        </Reveal>
       </Container>
     </section>
   );
