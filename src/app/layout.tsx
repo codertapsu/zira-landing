@@ -163,6 +163,12 @@ export default function RootLayout({
             `Organization.logo` (see page.tsx JSON-LD) is the semantic
             equivalent and remains the canonical brand-logo source. */}
         <meta property="og:logo" content={`${siteUrl}/brand_logo_full.png`} />
+        {/* Motion sets `style="opacity:0; transform:..."` on Reveal
+            elements during SSR. Without JS those styles never animate
+            away, so this no-JS override forces the rendered state. */}
+        <noscript>
+          <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
       </head>
       <body className="min-h-screen bg-white text-[color:var(--color-ink)] antialiased">{children}</body>
     </html>

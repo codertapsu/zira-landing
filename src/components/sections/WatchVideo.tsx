@@ -1,4 +1,5 @@
 import { Container } from "@/components/ui/Container";
+import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 
 export function WatchVideo() {
@@ -9,12 +10,14 @@ export function WatchVideo() {
       className="bg-white py-20 sm:py-24"
     >
       <Container className="flex flex-col gap-14">
-        <SectionHeader
-          title={<span id="watch-video-heading">Xem Zira hoạt động trong thực tế</span>}
-          description="Một video ngắn cho bạn thấy cách đội nhóm dùng Zira để lên kế hoạch tuần, theo dõi công việc và phối hợp mà không bị quá tải."
-        />
+        <Reveal>
+          <SectionHeader
+            title={<span id="watch-video-heading">Xem Zira hoạt động trong thực tế</span>}
+            description="Một video ngắn cho bạn thấy cách đội nhóm dùng Zira để lên kế hoạch tuần, theo dõi công việc và phối hợp mà không bị quá tải."
+          />
+        </Reveal>
 
-        <div className="relative mx-auto w-full max-w-5xl">
+        <Reveal direction="scale" duration={0.7} className="relative mx-auto w-full max-w-5xl">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute -inset-6 -z-10 rounded-[32px] bg-[color:var(--color-brand-400)]/15 blur-3xl"
@@ -33,7 +36,7 @@ export function WatchVideo() {
               />
             </div>
           </div>
-        </div>
+        </Reveal>
       </Container>
     </section>
   );

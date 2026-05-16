@@ -1,10 +1,12 @@
 'use client';
 
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useCallback, useEffect, useState, type KeyboardEvent } from 'react';
 import type { StaticImageData } from 'next/image';
 import { Container } from '@/components/ui/Container';
 import { Icon } from '@/components/ui/Icon';
 import { PhoneMockup } from '@/components/ui/PhoneMockup';
+import { Reveal } from '@/components/ui/Reveal';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { featureTour, type FeatureTourSlide } from '@/lib/content';
 
@@ -43,17 +45,69 @@ const imageByKey: Record<FeatureTourSlide['imageKey'], StaticImageData> = {
   '015': fifteenImage,
 };
 
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+// Direction-aware enter/exit for the phone mockup. `direction` is +1 for
+// forward (next), -1 for backward (prev). The incoming slide enters from
+// the side the user is "moving toward"; the outgoing slide exits the
+// opposite way — mirroring the user's mental model of a carousel.
+const phoneVariants = {
+  enter: (direction: number) => ({
+    x: direction * 64,
+    opacity: 0,
+    scale: 0.94,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    scale: 1,
+  },
+  exit: (direction: number) => ({
+    x: direction * -64,
+    opacity: 0,
+    scale: 0.94,
+  }),
+};
+
+const textVariants = {
+  initial: { opacity: 0, y: 14 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -10 },
+};
+
 export function FeatureTour() {
   const [active, setActive] = useState(0);
+  // +1 for forward (auto-advance or next), -1 for backward (prev).
+  // The phone slide direction follows this value.
+  const [direction, setDirection] = useState(1);
   const total = featureTour.length;
+  const shouldReduce = useReducedMotion();
 
-  const goTo = useCallback((next: number) => setActive(((next % total) + total) % total), [total]);
+  const goTo = useCallback(
+    (next: number) => {
+      const normalizedNext = ((next % total) + total) % total;
+      setActive((cur) => {
+        if (normalizedNext === cur) return cur;
+        // Match adjacency including the wrap (last → first counts as
+        // forward, first → prev counts as backward) so arrow buttons
+        // feel right at the ends.
+        const forward = (cur + 1) % total;
+        const backward = (cur - 1 + total) % total;
+        if (normalizedNext === forward) setDirection(1);
+        else if (normalizedNext === backward) setDirection(-1);
+        else setDirection(normalizedNext > cur ? 1 : -1);
+        return normalizedNext;
+      });
+    },
+    [total],
+  );
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && 'setInterval' in window) {
-      const timer = window.setInterval(() => setActive((i) => (i + 1) % total), 6000);
-      return () => window.clearInterval(timer);
-    }
+    const timer = window.setInterval(() => {
+      setDirection(1);
+      setActive((i) => (i + 1) % total);
+    }, 6000);
+    return () => window.clearInterval(timer);
   }, [total]);
 
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -67,80 +121,127 @@ export function FeatureTour() {
   };
 
   const current = featureTour[active];
-  const stepLabel = `${String(active + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+
+  // Respect prefers-reduced-motion: collapse all distance-based animations
+  // to simple fades. Durations stay the same so timing feels consistent
+  // with the rest of the page.
+  const phoneTransition = shouldReduce
+    ? { duration: 0.25, ease: EASE }
+    : { duration: 0.55, ease: EASE };
+  const textTransition = shouldReduce
+    ? { duration: 0.2, ease: EASE }
+    : { duration: 0.35, ease: EASE };
 
   return (
-    <section id="feature-tour" aria-labelledby="feature-tour-heading" className="bg-white py-20 sm:py-24">
+    <section
+      id="feature-tour"
+      aria-labelledby="feature-tour-heading"
+      className="bg-white py-20 sm:py-24"
+    >
       <Container className="flex flex-col gap-14">
-        <SectionHeader
-          title={<span id="feature-tour-heading">Khám phá Zira qua từng màn hình</span>}
-          description="Lướt qua các tính năng quan trọng nhất — từ tổng quan công việc trong ngày đến báo cáo dự án và bản vẽ cộng tác."
-        />
+        <Reveal>
+          <SectionHeader
+            title={<span id="feature-tour-heading">Khám phá Zira qua từng màn hình</span>}
+            description="Lướt qua các tính năng quan trọng nhất — từ tổng quan công việc trong ngày đến báo cáo dự án và bản vẽ cộng tác."
+          />
+        </Reveal>
 
-        <div
+        <Reveal
           tabIndex={0}
           role="region"
           aria-roledescription="carousel"
           aria-label="Hướng dẫn nhanh các tính năng Zira"
           onKeyDown={onKeyDown}
+          delay={0.1}
           className="grid items-center gap-12 rounded-3xl outline-none lg:grid-cols-[1fr_1fr]"
         >
-          <div className="relative mx-auto flex h-[560px] w-full max-w-md items-center justify-center">
+          <div className="relative mx-auto flex h-[560px] w-full max-w-md items-center justify-center overflow-hidden">
             <div
               aria-hidden="true"
               className="absolute h-[340px] w-[340px] rounded-full bg-[color:var(--color-brand-400)]"
             />
 
-            {featureTour.map((slide, index) => {
-              const isActive = index === active;
-              return (
-                <div
-                  key={slide.imageKey}
-                  aria-hidden={!isActive}
-                  className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${
-                    isActive ? 'opacity-100' : 'pointer-events-none opacity-0'
-                  }`}
-                >
-                  <PhoneMockup src={imageByKey[slide.imageKey]} alt={slide.alt} className="relative" />
-                </div>
-              );
-            })}
+            <AnimatePresence custom={direction} initial={false} mode="popLayout">
+              <motion.div
+                key={current.imageKey}
+                custom={direction}
+                variants={shouldReduce ? undefined : phoneVariants}
+                initial={shouldReduce ? { opacity: 0 } : 'enter'}
+                animate={shouldReduce ? { opacity: 1 } : 'center'}
+                exit={shouldReduce ? { opacity: 0 } : 'exit'}
+                transition={phoneTransition}
+                className="absolute inset-0 flex items-center justify-center"
+              >
+                <PhoneMockup
+                  src={imageByKey[current.imageKey]}
+                  alt={current.alt}
+                  className="relative"
+                />
+              </motion.div>
+            </AnimatePresence>
           </div>
 
           <div className="flex flex-col gap-6 lg:max-w-md" aria-live="polite" aria-atomic="true">
-            {/* <span className="font-display text-xs font-bold uppercase tracking-[0.18em] text-[color:var(--color-brand-500)]">
-              Step {stepLabel}
-            </span> */}
+            {/* Fixed-height stacks keep the layout still while the text
+                swaps in/out. Children are absolutely positioned so old
+                and new content can crossfade without pushing the dots
+                and arrows down a row. */}
+            <div className="relative min-h-[5rem] sm:min-h-[6rem]">
+              <AnimatePresence mode="wait">
+                <motion.h3
+                  key={`title-${active}`}
+                  variants={textVariants}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  transition={textTransition}
+                  className="absolute inset-0 font-display text-3xl font-semibold leading-tight text-[color:var(--color-ink)] sm:text-4xl"
+                >
+                  {current.title}
+                </motion.h3>
+              </AnimatePresence>
+            </div>
 
-            <h3
-              key={`title-${active}`}
-              className="font-display text-3xl font-semibold leading-tight text-[color:var(--color-ink)] sm:text-4xl"
-            >
-              {current.title}
-            </h3>
-
-            <p key={`desc-${active}`} className="text-base leading-relaxed text-[color:var(--color-ink-soft)]">
-              {current.description}
-            </p>
+            <div className="relative min-h-[5rem]">
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={`desc-${active}`}
+                  variants={textVariants}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  transition={{ ...textTransition, delay: shouldReduce ? 0 : 0.06 }}
+                  className="absolute inset-0 text-base leading-relaxed text-[color:var(--color-ink-soft)]"
+                >
+                  {current.description}
+                </motion.p>
+              </AnimatePresence>
+            </div>
 
             <div className="mt-4 flex flex-wrap items-center gap-6">
               <div className="flex gap-3" role="group" aria-label="Điều hướng slide">
-                <button
+                <motion.button
                   type="button"
                   onClick={() => goTo(active - 1)}
                   aria-label="Tính năng trước"
+                  whileHover={shouldReduce ? undefined : { scale: 1.08 }}
+                  whileTap={shouldReduce ? undefined : { scale: 0.92 }}
+                  transition={{ duration: 0.15, ease: EASE }}
                   className="grid h-10 w-10 place-items-center rounded-full bg-[#e9fffa] text-[color:var(--color-brand-500)] transition-colors duration-150 hover:bg-[#d3f4ed]"
                 >
                   <Icon name="chevron-left" width={20} height={20} />
-                </button>
-                <button
+                </motion.button>
+                <motion.button
                   type="button"
                   onClick={() => goTo(active + 1)}
                   aria-label="Tính năng kế tiếp"
+                  whileHover={shouldReduce ? undefined : { scale: 1.08 }}
+                  whileTap={shouldReduce ? undefined : { scale: 0.92 }}
+                  transition={{ duration: 0.15, ease: EASE }}
                   className="grid h-10 w-10 place-items-center rounded-full bg-[color:var(--color-brand-400)] text-white transition-colors duration-150 hover:bg-[color:var(--color-brand-500)]"
                 >
                   <Icon name="chevron-right" width={20} height={20} />
-                </button>
+                </motion.button>
               </div>
 
               <div className="flex items-center gap-2" role="tablist" aria-label="Chọn tính năng">
@@ -162,7 +263,7 @@ export function FeatureTour() {
               </div>
             </div>
           </div>
-        </div>
+        </Reveal>
       </Container>
     </section>
   );

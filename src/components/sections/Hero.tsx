@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Icon } from "@/components/ui/Icon";
 import { PhoneMockup } from "@/components/ui/PhoneMockup";
+import { Reveal } from "@/components/ui/Reveal";
 
 import firstImage from "@/assets/images/001.png";
 import subFirstImage from "@/assets/images/sub_001.png";
@@ -13,16 +14,16 @@ export function Hero() {
     <section id="top" className="relative overflow-hidden bg-white">
       <Container className="relative grid gap-14 py-20 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-12 lg:py-24">
         <div className="flex flex-col gap-7 text-center lg:text-left">
-          <h1 className="font-display text-4xl font-bold leading-[1.1] tracking-tight text-[color:var(--color-ink)] sm:text-5xl lg:text-[48px]">
+          <Reveal as="h1" delay={0} className="font-display text-4xl font-bold leading-[1.1] tracking-tight text-[color:var(--color-ink)] sm:text-5xl lg:text-[48px]">
             Quản lý công việc và dự án
             <br className="hidden sm:inline" /> ngay trong Zalo
-          </h1>
+          </Reveal>
 
-          <p className="mx-auto max-w-md text-sm leading-relaxed text-[color:var(--color-ink-soft)] lg:mx-0">
+          <Reveal as="p" delay={0.1} className="mx-auto max-w-md text-sm leading-relaxed text-[color:var(--color-ink-soft)] lg:mx-0">
             Zira là Zalo Mini App giúp bạn tổ chức nhiệm vụ, dự án, lịch họp, ghi chú và báo cáo — tất cả trên di động, không cần cài đặt thêm ứng dụng nào.
-          </p>
+          </Reveal>
 
-          <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-4 lg:justify-start">
+          <Reveal delay={0.2} className="flex flex-col items-center gap-3 sm:flex-row sm:gap-4 lg:justify-start">
             <Button href="#download" variant="primary" size="lg">
               Mở ngay trong Zalo
               <Icon name="arrow-right" width={18} height={18} />
@@ -41,10 +42,10 @@ export function Hero() {
               </span>
               Xem giới thiệu
             </Button>
-          </div>
+          </Reveal>
         </div>
 
-        <div className="relative mx-auto flex h-[560px] w-full max-w-md items-center justify-center">
+        <Reveal direction="scale" delay={0.15} duration={0.7} className="relative mx-auto flex h-[560px] w-full max-w-md items-center justify-center">
           <HeroShine />
 
           <PhoneMockup
@@ -57,7 +58,7 @@ export function Hero() {
           <div className="absolute bottom-12 left-0 z-10 flex w-[220px] flex-col gap-3 overflow-hidden rounded-xl sm:left-2">
             <Image src={subFirstImage} alt="Đội nhóm cộng tác trên Zira Mini App" priority />
           </div>
-        </div>
+        </Reveal>
       </Container>
     </section>
   );
