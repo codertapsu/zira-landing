@@ -10,7 +10,7 @@ export const dynamic = "force-static";
 // (`zira-server`) must also serve `/robots.txt` at the origin root
 // — either by mirroring this content or by proxying to
 // `/landing/robots.txt`.
-const siteUrl = "https://zira.unicloud.me/landing";
+const siteUrl = "https://zira.top/landing";
 
 export default function robots(): MetadataRoute.Robots {
   return {

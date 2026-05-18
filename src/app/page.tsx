@@ -7,9 +7,9 @@ import { HowItWorks } from "@/components/sections/HowItWorks";
 import { ReadyToRide } from "@/components/sections/ReadyToRide";
 import { WatchVideo } from "@/components/sections/WatchVideo";
 
-// The landing is served at `https://zira.unicloud.me/landing/` — keep this
+// The landing is served at `https://zira.top/landing/` — keep this
 // constant aligned with `basePath` in `next.config.ts` and `layout.tsx`.
-const siteUrl = "https://zira.unicloud.me/landing";
+const siteUrl = "https://zira.top/landing";
 
 const softwareJsonLd = {
   "@context": "https://schema.org",
@@ -53,7 +53,7 @@ const organizationJsonLd = {
   name: "Zira",
   url: siteUrl,
   // Brand logo lives at the SPA root, not under the landing basePath.
-  logo: "https://zira.unicloud.me/app/assets/images/brand_logo_full.png",
+  logo: "https://zira.top/app/assets/images/brand_logo_full.png",
 };
 
 const websiteJsonLd = {

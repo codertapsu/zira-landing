@@ -17,10 +17,10 @@ const roboto = Roboto({
 });
 
 // `siteUrl` is the absolute URL where the landing page is reachable —
-// `zira.unicloud.me/landing/`. Keep this in sync with the `basePath`
+// `zira.top/landing/`. Keep this in sync with the `basePath`
 // declared in `next.config.ts` and the `/landing` mount in
 // `zira-server/apps/api-gateway/src/main.ts`.
-const siteUrl = 'https://zira.unicloud.me/landing';
+const siteUrl = 'https://zira.top/landing';
 // Next.js auto-prefixes _next/* asset URLs with `basePath`, but it does NOT
 // prefix `metadata.icons`, `metadata.manifest`, or `metadata.other` paths.
 // Keep this constant aligned with `basePath` in `next.config.ts`.
