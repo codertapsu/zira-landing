@@ -28,7 +28,7 @@ export function Header() {
 
         <div className="flex items-center gap-3">
           <Button href="#download" variant="primary" size="sm">
-            Mở Mini App
+            Bắt đầu ngay
           </Button>
         </div>
       </Container>

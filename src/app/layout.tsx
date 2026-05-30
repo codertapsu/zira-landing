@@ -20,9 +20,9 @@ const roboto = Roboto({
 // `zira.top/`. The server mounts the static export at the origin root
 // (see `zira-server/apps/api-gateway/src/main.ts`).
 const siteUrl = 'https://zira.top';
-const title = 'Zira — Quản lý công việc, dự án và nhóm trên Zalo Mini App';
+const title = 'Zira — Quản lý công việc, dự án và nhóm trên Zalo Mini App và web';
 const description =
-  'Zira là Zalo Mini App giúp bạn quản lý công việc, dự án, nhiệm vụ, lịch, ghi chú và báo cáo trực quan ngay trên di động. Đơn giản, nhanh, mở ngay trong Zalo.';
+  'Zira giúp bạn quản lý công việc, dự án, nhiệm vụ, lịch, ghi chú và báo cáo trực quan. Dùng trên Zalo Mini App hoặc trình duyệt tại zira.top/app — đơn giản, nhanh, không cần cài đặt.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

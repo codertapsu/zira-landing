@@ -15,15 +15,17 @@ const softwareJsonLd = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
   name: "Zira",
-  alternateName: "Zira Mini App",
+  alternateName: ["Zira Mini App", "Zira Web App"],
   applicationCategory: "BusinessApplication",
   applicationSubCategory: "ProjectManagementApplication",
   operatingSystem: "Zalo Mini App, Web",
   inLanguage: "vi-VN",
   url: siteUrl,
+  // Direct entry points users can click from search results / rich previews.
+  sameAs: ["https://zira.top/app/"],
   image: `${siteUrl}/og-image.png`,
   description:
-    "Zira là Zalo Mini App giúp quản lý công việc, dự án, nhiệm vụ, lịch, ghi chú và báo cáo trên di động. Dành cho đội nhóm vừa và nhỏ, dùng ngay trong Zalo.",
+    "Zira giúp quản lý công việc, dự án, nhiệm vụ, lịch, ghi chú và báo cáo. Dùng trên Zalo Mini App hoặc trên trình duyệt tại zira.top/app — dành cho đội nhóm vừa và nhỏ.",
   featureList: [
     "Quản lý dự án và sprint",
     "Quản lý nhiệm vụ",

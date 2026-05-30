@@ -16,16 +16,16 @@ export function Hero() {
         <div className="flex flex-col gap-7 text-center lg:text-left">
           <Reveal as="h1" delay={0} className="font-display text-4xl font-bold leading-[1.1] tracking-tight text-[color:var(--color-ink)] sm:text-5xl lg:text-[48px]">
             Quản lý công việc và dự án
-            <br className="hidden sm:inline" /> ngay trong Zalo
+            <br className="hidden sm:inline" /> cho nhóm của bạn
           </Reveal>
 
           <Reveal as="p" delay={0.1} className="mx-auto max-w-md text-sm leading-relaxed text-[color:var(--color-ink-soft)] lg:mx-0">
-            Zira là Zalo Mini App giúp bạn tổ chức nhiệm vụ, dự án, lịch họp, ghi chú và báo cáo — tất cả trên di động, không cần cài đặt thêm ứng dụng nào.
+            Zira giúp bạn tổ chức nhiệm vụ, dự án, lịch họp, ghi chú và báo cáo — dùng trên Zalo Mini App hoặc trình duyệt, không cần cài đặt thêm ứng dụng nào.
           </Reveal>
 
           <Reveal delay={0.2} className="flex flex-col items-center gap-3 sm:flex-row sm:gap-4 lg:justify-start">
             <Button href="#download" variant="primary" size="lg">
-              Mở ngay trong Zalo
+              Bắt đầu ngay
               <Icon name="arrow-right" width={18} height={18} />
             </Button>
             <Button
