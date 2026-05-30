@@ -1,19 +1,13 @@
 import type { NextConfig } from "next";
 import path from "node:path";
 
-// The landing page is mounted under `/landing` on the API gateway
-// (see `zira-server/apps/api-gateway/src/main.ts`). `basePath` tells
-// Next.js to prefix every emitted asset URL with `/landing` so that
-// `index.html` references e.g. `/landing/_next/static/chunks/main.js`
-// — which resolves correctly when Express strips the `/landing`
-// segment before looking the file up inside `out/`.
-const basePath = "/landing";
-
+// The landing page is mounted at the origin root on the API gateway
+// (see `zira-server/apps/api-gateway/src/main.ts`). Requests to
+// `/landing/*` are 301-redirected to `/*` to preserve any legacy
+// links that may have indexed the previous subpath deployment.
 const nextConfig: NextConfig = {
   output: "export",
   trailingSlash: true,
-  basePath,
-  assetPrefix: basePath,
   images: {
     unoptimized: true,
   },

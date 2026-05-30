@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 // `output: "export"` requires metadata routes to be marked static.
 export const dynamic = "force-static";
 
-const siteUrl = "https://zira.top/landing";
+const siteUrl = "https://zira.top";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();

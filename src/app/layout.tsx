@@ -17,14 +17,9 @@ const roboto = Roboto({
 });
 
 // `siteUrl` is the absolute URL where the landing page is reachable —
-// `zira.top/landing/`. Keep this in sync with the `basePath`
-// declared in `next.config.ts` and the `/landing` mount in
-// `zira-server/apps/api-gateway/src/main.ts`.
-const siteUrl = 'https://zira.top/landing';
-// Next.js auto-prefixes _next/* asset URLs with `basePath`, but it does NOT
-// prefix `metadata.icons`, `metadata.manifest`, or `metadata.other` paths.
-// Keep this constant aligned with `basePath` in `next.config.ts`.
-const basePath = '/landing';
+// `zira.top/`. The server mounts the static export at the origin root
+// (see `zira-server/apps/api-gateway/src/main.ts`).
+const siteUrl = 'https://zira.top';
 const title = 'Zira — Quản lý công việc, dự án và nhóm trên Zalo Mini App';
 const description =
   'Zira là Zalo Mini App giúp bạn quản lý công việc, dự án, nhiệm vụ, lịch, ghi chú và báo cáo trực quan ngay trên di động. Đơn giản, nhanh, mở ngay trong Zalo.';
@@ -59,9 +54,6 @@ export const metadata: Metadata = {
   authors: [{ name: 'Zira' }],
   creator: 'Zira',
   publisher: 'Zira',
-  // Absolute URLs (not just `'/'`) because `new URL('/', metadataBase)` would
-  // resolve to the origin and drop the `/landing` path segment, emitting a
-  // wrong canonical on a subpath deploy.
   alternates: {
     canonical: `${siteUrl}/`,
     languages: {
@@ -113,29 +105,29 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: `${basePath}/favicon.ico`, sizes: 'any' },
-      { url: `${basePath}/favicon-16x16.png`, sizes: '16x16', type: 'image/png' },
-      { url: `${basePath}/favicon-32x32.png`, sizes: '32x32', type: 'image/png' },
-      { url: `${basePath}/favicon-96x96.png`, sizes: '96x96', type: 'image/png' },
-      { url: `${basePath}/android-icon-192x192.png`, sizes: '192x192', type: 'image/png' },
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
+      { url: '/android-icon-192x192.png', sizes: '192x192', type: 'image/png' },
     ],
     apple: [
-      { url: `${basePath}/apple-icon-57x57.png`, sizes: '57x57' },
-      { url: `${basePath}/apple-icon-60x60.png`, sizes: '60x60' },
-      { url: `${basePath}/apple-icon-72x72.png`, sizes: '72x72' },
-      { url: `${basePath}/apple-icon-76x76.png`, sizes: '76x76' },
-      { url: `${basePath}/apple-icon-114x114.png`, sizes: '114x114' },
-      { url: `${basePath}/apple-icon-120x120.png`, sizes: '120x120' },
-      { url: `${basePath}/apple-icon-144x144.png`, sizes: '144x144' },
-      { url: `${basePath}/apple-icon-152x152.png`, sizes: '152x152' },
-      { url: `${basePath}/apple-icon-180x180.png`, sizes: '180x180' },
+      { url: '/apple-icon-57x57.png', sizes: '57x57' },
+      { url: '/apple-icon-60x60.png', sizes: '60x60' },
+      { url: '/apple-icon-72x72.png', sizes: '72x72' },
+      { url: '/apple-icon-76x76.png', sizes: '76x76' },
+      { url: '/apple-icon-114x114.png', sizes: '114x114' },
+      { url: '/apple-icon-120x120.png', sizes: '120x120' },
+      { url: '/apple-icon-144x144.png', sizes: '144x144' },
+      { url: '/apple-icon-152x152.png', sizes: '152x152' },
+      { url: '/apple-icon-180x180.png', sizes: '180x180' },
     ],
   },
-  manifest: `${basePath}/manifest.json`,
+  manifest: '/manifest.json',
   other: {
     'msapplication-TileColor': '#ffffff',
-    'msapplication-TileImage': `${basePath}/ms-icon-144x144.png`,
-    'msapplication-config': `${basePath}/browserconfig.xml`,
+    'msapplication-TileImage': '/ms-icon-144x144.png',
+    'msapplication-config': '/browserconfig.xml',
   },
   formatDetection: {
     email: false,

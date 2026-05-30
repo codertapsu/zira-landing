@@ -7,9 +7,9 @@ import { HowItWorks } from "@/components/sections/HowItWorks";
 import { ReadyToRide } from "@/components/sections/ReadyToRide";
 import { WatchVideo } from "@/components/sections/WatchVideo";
 
-// The landing is served at `https://zira.top/landing/` — keep this
-// constant aligned with `basePath` in `next.config.ts` and `layout.tsx`.
-const siteUrl = "https://zira.top/landing";
+// The landing is served at `https://zira.top/` — the static export is
+// mounted at the origin root by the API gateway.
+const siteUrl = "https://zira.top";
 
 const softwareJsonLd = {
   "@context": "https://schema.org",
