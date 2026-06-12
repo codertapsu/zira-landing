@@ -8,14 +8,19 @@
   --color-surface: #ffffff;
   --color-surface-soft: #fafafa;
 
-  --color-brand-50: #fff8e1;
-  --color-brand-100: #ffeebf;
-  --color-brand-400: #fbbc05;
-  --color-brand-500: #f0a800;
-  --color-brand-600: #c98a00;
+  /* Zalo-blue brand ramp — mirrors the app's canonical palette
+     (zira-client appearance.scss: --accent-primary #0a7cff,
+     --action-primary #006af5, bright ramp end #2e91ff). */
+  --color-brand-50: #e9f3ff;
+  --color-brand-100: #cfe6ff;
+  --color-brand-400: #2e91ff;
+  --color-brand-500: #0a7cff;
+  --color-brand-600: #006af5;
 
-  --color-accent-500: #ec5c2e;
-  --color-accent-600: #d24a1f;
+  /* Secondary accent — the app's onion-purple gradient overlay
+     (#9d70f8), so landing CTAs echo the in-app identity. */
+  --color-accent-500: #9d70f8;
+  --color-accent-600: #8154e8;
 
   --font-sans: var(--font-be-vietnam-pro), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", Roboto, sans-serif;
