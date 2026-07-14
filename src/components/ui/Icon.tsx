@@ -20,6 +20,7 @@ type IconName =
   | "mail"
   | "building"
   | "car"
+  | "send"
   | "quote";
 
 interface IconProps extends SVGProps<SVGSVGElement> {
@@ -232,6 +233,18 @@ const paths: Record<IconName, ReactElement> = {
       d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z"
       fill="currentColor"
     />
+  ),
+  send: (
+    <g
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M21 3L3 10.5l6 2.5 2.5 6L21 3z" />
+      <path d="M9 13l4-4" />
+    </g>
   ),
 };
 

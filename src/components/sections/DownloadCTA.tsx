@@ -22,10 +22,10 @@ export function DownloadCTA() {
               </Reveal>
 
               <Reveal as="p" delay={0.25} className="mx-auto max-w-md text-sm leading-relaxed text-white/85 lg:mx-0">
-                Hai cách dễ nhất để dùng Zira: quét mã QR mở trong Zalo Mini App, hoặc truy cập trực tiếp trên trình duyệt — cả hai đều miễn phí và không cần cài đặt.
+                Ba cách dễ nhất để dùng Zira: quét mã QR mở trong Zalo Mini App, mở ngay trong Telegram, hoặc truy cập trực tiếp trên trình duyệt — tất cả đều miễn phí và không cần cài đặt.
               </Reveal>
 
-              <Reveal delay={0.35} className="mx-auto grid w-full max-w-md grid-cols-1 gap-4 sm:grid-cols-2 lg:mx-0 lg:max-w-none">
+              <Reveal delay={0.35} className="mx-auto grid w-full max-w-md grid-cols-1 gap-4 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                 {/* Zalo Mini App access — scan to launch */}
                 <div className="flex flex-col items-center gap-3 rounded-2xl bg-white p-5 shadow-[var(--shadow-card)]">
                   <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[color:var(--color-ink-soft)]">
@@ -63,6 +63,28 @@ export function DownloadCTA() {
                   </div>
                   <Button href="https://zira.top/app/" variant="primary" size="sm">
                     zira.top/app
+                    <Icon name="arrow-up-right" width={14} height={14} />
+                  </Button>
+                </div>
+
+                {/* Telegram Mini App access — open directly in Telegram */}
+                <div className="flex flex-col items-center justify-between gap-3 rounded-2xl bg-white p-5 shadow-[var(--shadow-card)]">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[color:var(--color-ink-soft)]">
+                    Mở trong Telegram
+                  </span>
+                  <div
+                    aria-hidden="true"
+                    className="grid h-[140px] w-[140px] place-items-center rounded-2xl bg-[color:var(--color-brand-100)]"
+                  >
+                    <Icon
+                      name="send"
+                      width={64}
+                      height={64}
+                      className="text-[color:var(--color-brand-500)]"
+                    />
+                  </div>
+                  <Button href="https://t.me/ziragram_bot/app" variant="primary" size="sm">
+                    Mở Telegram
                     <Icon name="arrow-up-right" width={14} height={14} />
                   </Button>
                 </div>
