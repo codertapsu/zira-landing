@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/ui/Logo";
 import { Reveal } from "@/components/ui/Reveal";
@@ -13,15 +15,18 @@ export function Footer() {
           © 2026 Zira. Quản lý công việc, dự án và nhóm trên Zalo Mini App.
         </Reveal>
         <div className="flex gap-5">
-          {/* <a href="#" className="hover:text-[color:var(--color-brand-500)]">
+          <Link
+            href="/privacy"
+            className="hover:text-[color:var(--color-brand-500)]"
+          >
             Quyền riêng tư
-          </a>
-          <a href="#" className="hover:text-[color:var(--color-brand-500)]">
+          </Link>
+          <Link
+            href="/terms"
+            className="hover:text-[color:var(--color-brand-500)]"
+          >
             Điều khoản
-          </a>
-          <a href="#" className="hover:text-[color:var(--color-brand-500)]">
-            Cookie
-          </a> */}
+          </Link>
         </div>
       </Container>
     </footer>

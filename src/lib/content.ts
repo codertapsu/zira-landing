@@ -251,3 +251,166 @@ export const testimonials: Testimonial[] = [
     rating: 5,
   },
 ];
+
+// ---------------------------------------------------------------------------
+// Legal pages (Privacy Policy + Terms of Service).
+//
+// NOTE: These are GOOD-FAITH DRAFTS covering the essentials (Nghị định
+// 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân + app-store basics). They are a
+// starting point and should be reviewed by legal counsel before being treated
+// as binding. Update `lastUpdated` whenever the copy changes.
+// ---------------------------------------------------------------------------
+
+export interface LegalSection {
+  heading: string;
+  paragraphs: string[];
+}
+
+export interface LegalDocument {
+  slug: "privacy" | "terms";
+  title: string;
+  lastUpdated: string;
+  intro: string;
+  sections: LegalSection[];
+  contactEmail: string;
+}
+
+const CONTACT_EMAIL = "hello@zira.top";
+const LAST_UPDATED = "17/07/2026";
+
+export const privacyPolicy: LegalDocument = {
+  slug: "privacy",
+  title: "Chính sách quyền riêng tư",
+  lastUpdated: LAST_UPDATED,
+  contactEmail: CONTACT_EMAIL,
+  intro:
+    "Zira tôn trọng quyền riêng tư của bạn. Chính sách này giải thích chúng tôi thu thập, sử dụng, lưu trữ và bảo vệ dữ liệu cá nhân của bạn như thế nào khi bạn dùng Zira trên Zalo Mini App, Telegram Mini App hoặc trình duyệt.",
+  sections: [
+    {
+      heading: "1. Dữ liệu chúng tôi thu thập",
+      paragraphs: [
+        "Thông tin tài khoản: mã định danh từ nền tảng bạn đăng nhập (Zalo hoặc Telegram), tên hiển thị, ảnh đại diện và ngôn ngữ. Chúng tôi không lưu mật khẩu của bạn.",
+        "Nội dung bạn tạo: dự án, nhiệm vụ, sprint, ghi chú, sự kiện lịch, bản vẽ, tệp đính kèm và bình luận.",
+        "Dữ liệu sử dụng và thiết bị: các thao tác trong ứng dụng, loại thiết bị và múi giờ, được dùng để vận hành và cải thiện dịch vụ.",
+      ],
+    },
+    {
+      heading: "2. Cách chúng tôi sử dụng dữ liệu",
+      paragraphs: [
+        "Để cung cấp và duy trì dịch vụ: hiển thị công việc của bạn, gửi thông báo bạn đã bật, và đồng bộ giữa các nền tảng.",
+        "Để cải thiện sản phẩm: hiểu tính năng nào hữu ích. Bạn có thể tắt việc thu thập dữ liệu phân tích trong phần cài đặt.",
+        "Chúng tôi KHÔNG bán dữ liệu cá nhân của bạn cho bên thứ ba.",
+      ],
+    },
+    {
+      heading: "3. Chia sẻ dữ liệu",
+      paragraphs: [
+        "Trong nhóm của bạn: nội dung bạn tạo trong một dự án được chia sẻ với các thành viên của dự án đó.",
+        "Nhà cung cấp hạ tầng: chúng tôi dùng dịch vụ lưu trữ và cơ sở dữ liệu để vận hành Zira; các bên này chỉ xử lý dữ liệu theo chỉ dẫn của chúng tôi.",
+        "Nền tảng nhắn tin: khi bạn kết nối bot Zalo/Telegram, thông báo được gửi qua nền tảng tương ứng.",
+      ],
+    },
+    {
+      heading: "4. Lưu trữ và bảo mật",
+      paragraphs: [
+        "Dữ liệu được lưu trên máy chủ và được bảo vệ bằng các biện pháp kỹ thuật hợp lý. Kết nối được mã hoá qua HTTPS.",
+        "Chúng tôi lưu dữ liệu của bạn trong thời gian tài khoản còn hoạt động và trong khoảng thời gian hợp lý sau đó để tuân thủ nghĩa vụ pháp lý.",
+      ],
+    },
+    {
+      heading: "5. Quyền của bạn",
+      paragraphs: [
+        "Truy cập và xuất dữ liệu: bạn có thể yêu cầu bản sao dữ liệu cá nhân của mình.",
+        "Chỉnh sửa: bạn có thể cập nhật thông tin hồ sơ trong ứng dụng.",
+        "Xoá tài khoản: bạn có thể yêu cầu xoá tài khoản và dữ liệu cá nhân liên quan.",
+        "Rút lại đồng ý: bạn có thể tắt phân tích hoặc ngắt kết nối bot bất cứ lúc nào.",
+      ],
+    },
+    {
+      heading: "6. Trẻ em",
+      paragraphs: [
+        "Zira không hướng đến trẻ em dưới độ tuổi tối thiểu theo quy định. Nếu bạn cho rằng một trẻ em đã cung cấp dữ liệu cho chúng tôi, vui lòng liên hệ để chúng tôi xử lý.",
+      ],
+    },
+    {
+      heading: "7. Thay đổi chính sách",
+      paragraphs: [
+        "Chúng tôi có thể cập nhật chính sách này. Bản mới nhất luôn được đăng tại trang này kèm ngày cập nhật.",
+      ],
+    },
+    {
+      heading: "8. Liên hệ",
+      paragraphs: [
+        `Mọi câu hỏi hoặc yêu cầu về dữ liệu cá nhân, vui lòng liên hệ ${CONTACT_EMAIL}.`,
+      ],
+    },
+  ],
+};
+
+export const termsOfService: LegalDocument = {
+  slug: "terms",
+  title: "Điều khoản sử dụng",
+  lastUpdated: LAST_UPDATED,
+  contactEmail: CONTACT_EMAIL,
+  intro:
+    "Bằng việc sử dụng Zira, bạn đồng ý với các điều khoản dưới đây. Vui lòng đọc kỹ trước khi sử dụng dịch vụ.",
+  sections: [
+    {
+      heading: "1. Chấp nhận điều khoản",
+      paragraphs: [
+        "Khi bạn truy cập hoặc sử dụng Zira, bạn đồng ý bị ràng buộc bởi các điều khoản này và Chính sách quyền riêng tư của chúng tôi. Nếu không đồng ý, vui lòng ngừng sử dụng dịch vụ.",
+      ],
+    },
+    {
+      heading: "2. Mô tả dịch vụ",
+      paragraphs: [
+        "Zira là công cụ quản lý công việc, dự án và nhóm, dùng trên Zalo Mini App, Telegram Mini App và trình duyệt. Chúng tôi có thể thay đổi hoặc ngừng một số tính năng theo thời gian.",
+      ],
+    },
+    {
+      heading: "3. Tài khoản của bạn",
+      paragraphs: [
+        "Bạn đăng nhập qua nền tảng bên thứ ba (Zalo/Telegram) và chịu trách nhiệm về hoạt động trong tài khoản của mình.",
+        "Bạn đồng ý cung cấp thông tin chính xác và giữ an toàn cho tài khoản.",
+      ],
+    },
+    {
+      heading: "4. Sử dụng hợp lệ",
+      paragraphs: [
+        "Bạn không được dùng Zira cho mục đích bất hợp pháp, phát tán nội dung độc hại, xâm phạm quyền của người khác, hoặc gây gián đoạn dịch vụ.",
+        "Bạn giữ quyền sở hữu đối với nội dung mình tạo ra và chịu trách nhiệm về nội dung đó.",
+      ],
+    },
+    {
+      heading: "5. Sở hữu trí tuệ",
+      paragraphs: [
+        "Zira và các thành phần của dịch vụ (trừ nội dung do người dùng tạo) thuộc sở hữu của chúng tôi và được pháp luật bảo hộ.",
+      ],
+    },
+    {
+      heading: "6. Miễn trừ và giới hạn trách nhiệm",
+      paragraphs: [
+        'Dịch vụ được cung cấp "nguyên trạng". Trong phạm vi pháp luật cho phép, chúng tôi không chịu trách nhiệm cho các thiệt hại gián tiếp phát sinh từ việc sử dụng dịch vụ.',
+        "Bạn nên tự sao lưu những dữ liệu quan trọng.",
+      ],
+    },
+    {
+      heading: "7. Chấm dứt",
+      paragraphs: [
+        "Bạn có thể ngừng sử dụng và xoá tài khoản bất cứ lúc nào. Chúng tôi có thể tạm ngừng hoặc chấm dứt quyền truy cập nếu bạn vi phạm các điều khoản này.",
+      ],
+    },
+    {
+      heading: "8. Luật áp dụng",
+      paragraphs: [
+        "Các điều khoản này được điều chỉnh bởi pháp luật Việt Nam.",
+      ],
+    },
+    {
+      heading: "9. Liên hệ",
+      paragraphs: [
+        `Mọi câu hỏi về điều khoản, vui lòng liên hệ ${CONTACT_EMAIL}.`,
+      ],
+    },
+  ],
+};
