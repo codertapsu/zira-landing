@@ -26,7 +26,9 @@ If a refactor reintroduces a `basePath`, you must also update `siteUrl` in `src/
 ## Build output
 
 - `npm run build` emits `./out` — a complete static site with `trailingSlash: true`, so every route is `<route>/index.html`.
-- `out/` is the deployment artifact. Rsync it to `WEB_LANDING_DIST_DIR` on the gateway.
+- `out/` is the deployment artifact. Rsync it to `WEB_LANDING_DIST_DIR` on the gateway (primary method).
+- **Optional secondary deploy**: `npm run deploy:firebase` ships the same `out/` to Firebase Hosting (project `zira-7439c`, default site, `landing` target — see `firebase.json`/`.firebaserc` and README "Optional: Firebase Hosting"). Purely additive; the gateway mount stays canonical, and absolute URLs still point at `https://zira.top`.
+- Firebase Analytics (GA4) initializes client-side in production via `src/components/FirebaseAnalytics.tsx` (dynamically imported, prod-only, `isSupported()`-guarded). Don't add a second analytics integration without removing this one.
 - No SSR, no edge runtime, no API routes. `output: "export"` rules out `revalidate`, route handlers, `cookies()`, `headers()`, etc. Both metadata routes (`robots.ts`, `sitemap.ts`) set `export const dynamic = "force-static"`.
 - `images.unoptimized: true` — there is no `/_next/image` loader. PNGs in `src/assets/images/` are served as-is.
 

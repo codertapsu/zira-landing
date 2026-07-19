@@ -92,6 +92,32 @@ The site uses Tailwind v4 with the `@theme` block in [`src/app/globals.css`](src
 
 The gateway also registers a permanent `/landing/*` → `/*` 301 redirect for legacy URLs from the previous `basePath: "/landing"` deployment (see [ARCHITECTURE.md](ARCHITECTURE.md#gateway-mount)).
 
+### Optional: Firebase Hosting
+
+The same `out/` artifact can also be deployed to Firebase Hosting — an
+additive option; the gateway deployment above remains the primary method.
+
+Firebase project: **`zira-7439c`** (shared with `zira-bot-console`). The
+landing owns the project's **default** hosting site (`zira-7439c.web.app`)
+via the `landing` deploy target in `.firebaserc`; the console deploys to an
+additional site. Requires the Firebase CLI logged in (`firebase login`).
+
+```bash
+npm run deploy:firebase   # = next build && firebase deploy --only hosting:landing
+```
+
+`firebase.json` serves `out/` with `trailingSlash` matching the Next
+config, immutable caching for `/_next/static/**`, and `no-cache` HTML.
+`out/404.html` is picked up automatically. Note: absolute URLs in metadata
+(`siteUrl`, JSON-LD, sitemap/robots) still point at `https://zira.top` —
+fine for a secondary/staging surface, but a canonical domain move would
+need those updated (see CLAUDE.md).
+
+Firebase Analytics (GA4, measurement ID in
+[`src/components/FirebaseAnalytics.tsx`](src/components/FirebaseAnalytics.tsx))
+is initialized client-side in production builds on **both** deployments;
+the SDK is dynamically imported so it never blocks first paint.
+
 ## License
 
 Internal project. Not currently licensed for external use.

@@ -6,9 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "deploy:firebase": "next build && firebase deploy --only hosting:landing"
   },
   "dependencies": {
+    "firebase": "^12.16.0",
     "motion": "^12.38.0",
     "next": "16.2.6",
     "react": "19.2.4",

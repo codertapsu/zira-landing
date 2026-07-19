@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Be_Vietnam_Pro, Roboto } from 'next/font/google';
 import './globals.css';
+import { FirebaseAnalytics } from '@/components/FirebaseAnalytics';
 
 const beVietnamPro = Be_Vietnam_Pro({
   variable: '--font-be-vietnam-pro',
@@ -162,7 +163,10 @@ export default function RootLayout({
           <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
         </noscript>
       </head>
-      <body className="min-h-screen bg-white text-[color:var(--color-ink)] antialiased">{children}</body>
+      <body className="min-h-screen bg-white text-[color:var(--color-ink)] antialiased">
+        {children}
+        <FirebaseAnalytics />
+      </body>
     </html>
   );
 }
