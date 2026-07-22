@@ -25,7 +25,7 @@ If a refactor reintroduces a `basePath`, you must also update `siteUrl` in `src/
 
 ## Next.js version note
 
-This repo uses Next.js 16.2.6 with React 19.2.4 (`package.json`). APIs, file conventions, and metadata route shapes may differ from earlier major versions. When in doubt, consult `node_modules/next/dist/docs/` before relying on training-data recall.
+This repo uses Next.js 16.2.11 with React 19.2.8 (`package.json`). APIs, file conventions, and metadata route shapes may differ from earlier major versions. When in doubt, consult `node_modules/next/dist/docs/` before relying on training-data recall.
 
 ## Build output
 
@@ -66,7 +66,7 @@ The whole site is `lang="vi-VN"`. English content is not currently translated �
 - `npm run build` — full static export. Check `out/index.html` for the JSON-LD blocks and `out/robots.txt` / `out/sitemap.xml` for the metadata routes.
 - `npm run dev` — local server at `http://localhost:3000`. Tab to a `Reveal`d element, then hit `Cmd-Shift-R` with DevTools "Disable JavaScript" on to verify the no-JS fallback.
 - There is no `typecheck` or `test` script (`package.json`). `next build` is the type check — don't claim types pass without running it.
-- CI runs exactly `npm ci && npm run lint && npm run build` on Node 22 (`.github/workflows/landing-ci.yml`). If those two pass locally, CI passes.
+- CI runs exactly `npm ci && npm run lint && npm run build` on Node 24.18.0 (`.github/workflows/landing-ci.yml`). If those two pass locally, CI passes.
 
 ## Working agreements for AI agents
 

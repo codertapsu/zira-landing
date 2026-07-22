@@ -12,7 +12,7 @@ The landing app (`zira.top/`) and the SPA (`zira.top/app/`) live in the same ori
 
 ## Quick start
 
-Prereqs: Node.js 20+, npm.
+Prereqs: Node.js 24.18.0+ (see `.nvmrc`), npm 12+.
 
 ```bash
 # install
