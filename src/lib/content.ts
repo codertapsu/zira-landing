@@ -275,7 +275,7 @@ export interface LegalDocument {
   contactEmail: string;
 }
 
-const CONTACT_EMAIL = "hello@zira.top";
+const CONTACT_EMAIL = "hoangduykhanh21@gmail.com";
 const LAST_UPDATED = "17/07/2026";
 
 export const privacyPolicy: LegalDocument = {
