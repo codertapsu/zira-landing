@@ -83,7 +83,7 @@ export function DownloadCTA() {
                       className="text-[color:var(--color-brand-500)]"
                     />
                   </div>
-                  <Button href="https://t.me/ziragram_bot/app" variant="primary" size="sm">
+                  <Button href="https://t.me/ZiraSupportBot/zira" variant="primary" size="sm">
                     Mở Telegram
                     <Icon name="arrow-up-right" width={14} height={14} />
                   </Button>
