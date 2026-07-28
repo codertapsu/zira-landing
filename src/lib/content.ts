@@ -178,6 +178,63 @@ export const featureTour: FeatureTourSlide[] = [
   },
 ];
 
+// ---------------------------------------------------------------------------
+// Download CTA — the three ways into Zira. Every channel exposes the SAME url
+// through both a QR code and a button, so a scan and a click always land on
+// the same place (and carry the same attribution).
+// ---------------------------------------------------------------------------
+
+export type DownloadChannelKey = "zalo" | "web" | "telegram";
+
+export interface DownloadChannel {
+  /** Picks the QR PNG from the `qrByKey` map in `DownloadCTA`. */
+  key: DownloadChannelKey;
+  /** Small uppercase caption above the QR code. */
+  eyebrow: string;
+  /** Visible label on the tile's link button. */
+  action: string;
+  /** Destination encoded in the QR code AND used as the button href. */
+  href: string;
+  /** Alt text describing what scanning this QR code does. */
+  qrAlt: string;
+}
+
+export interface DownloadCtaCopy {
+  heading: string;
+  description: string;
+  channels: DownloadChannel[];
+}
+
+export const downloadCta: DownloadCtaCopy = {
+  heading: "Bắt đầu sử dụng Zira ngay",
+  description:
+    "Ba cách để mở Zira: trong Zalo Mini App, trên trình duyệt hoặc trong Telegram. Quét mã QR bằng điện thoại hoặc bấm vào liên kết bên dưới — tất cả đều miễn phí và không cần cài đặt.",
+  channels: [
+    {
+      key: "zalo",
+      eyebrow: "Zalo Mini App",
+      action: "Mở trong Zalo",
+      href: "https://zalo.me/s/483506872667069028/?utm_source=app-landing",
+      qrAlt: "Mã QR quét bằng điện thoại để mở Zira Mini App trong Zalo",
+    },
+    {
+      key: "web",
+      eyebrow: "Trình duyệt web",
+      action: "Mở zira.top/app",
+      href: "https://zira.top/app/",
+      qrAlt:
+        "Mã QR quét bằng điện thoại để mở Zira trên trình duyệt tại zira.top/app",
+    },
+    {
+      key: "telegram",
+      eyebrow: "Telegram Mini App",
+      action: "Mở trong Telegram",
+      href: "https://t.me/ZiraSupportBot/zira",
+      qrAlt: "Mã QR quét bằng điện thoại để mở Zira Mini App trong Telegram",
+    },
+  ],
+};
+
 export type TestimonialAccent =
   | "amber"
   | "peach"

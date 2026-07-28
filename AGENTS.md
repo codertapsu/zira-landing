@@ -44,6 +44,9 @@ This repo uses Next.js 16.2.11 with React 19.2.8 (`package.json`). APIs, file co
 - `howItWorksFeatures` — 4 steps for `HowItWorks`.
 - `readyToRideFeatures` — 3 tiles for `ReadyToRide`.
 - `featureTour` — 15 slides for `FeatureTour` (each ties to a PNG via `imageKey`).
+- `downloadCta` — heading, description and the 3 `channels` (Zalo / web / Telegram) for
+  `DownloadCTA`. Each channel's `key` maps to a QR PNG in `DownloadCTA.tsx`'s `qrByKey`,
+  and that PNG encodes exactly the channel's `href` — change one, regenerate the other.
 - `testimonials` — 6 quotes for `Testimonials` (currently not mounted in `page.tsx`).
 - `privacyPolicy` / `termsOfService` — `LegalDocument` bodies rendered by `LegalPage` at `/privacy` and `/terms`. Both share the `CONTACT_EMAIL` and `LAST_UPDATED` constants at the top of the legal block — bump `LAST_UPDATED` whenever you edit either document's `sections`.
 
