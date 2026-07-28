@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
+import { useEffect } from "react";
 import type { HTMLAttributes, ReactNode } from "react";
 
 type RevealDirection = "up" | "down" | "left" | "right" | "fade" | "scale";
@@ -81,6 +82,14 @@ type MotionConflictingProps = {
  *   - A global `<noscript>` rule in `layout.tsx` forces full visibility
  *     when JS is disabled, so the `initial={{ opacity: 0 }}` style does
  *     not strand the content in an invisible state.
+ *   - A watchdog in `layout.tsx` covers the case `<noscript>` cannot: JS
+ *     enabled but Motion never runs (chunk fails to load, browser too old
+ *     to parse it, script blocked). Without it the SSR'd `opacity: 0` is
+ *     never cleared and the entire page renders blank.
+ *
+ * Because of that last point, ANY change here that alters `data-reveal` or
+ * the `initial` opacity must keep the watchdog contract intact: the element
+ * carries `data-reveal`, and mounting sets `data-reveal-ready` on <html>.
  */
 export function Reveal({
   children,
@@ -95,6 +104,18 @@ export function Reveal({
   ...rest
 }: RevealProps) {
   const shouldReduce = useReducedMotion();
+
+  // Tells the watchdog in `layout.tsx` that Motion is alive, so it does not
+  // force-reveal the page. Reaching this effect proves React hydrated AND
+  // `motion/react` imported — exactly the two things that must hold for the
+  // SSR'd `opacity:0` to ever animate away.
+  //
+  // MUST stay above the reduced-motion early return below: a hook after a
+  // conditional return breaks the rules of hooks. Idempotent, so it is fine
+  // that every Reveal on the page runs it.
+  useEffect(() => {
+    document.documentElement.setAttribute("data-reveal-ready", "");
+  }, []);
 
   if (shouldReduce) {
     const Tag = as;

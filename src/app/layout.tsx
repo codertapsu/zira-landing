@@ -162,6 +162,27 @@ export default function RootLayout({
         <noscript>
           <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
         </noscript>
+        {/*
+          Watchdog for the case `<noscript>` cannot cover: JS is ENABLED but
+          Motion never runs. Then nothing clears the SSR'd `opacity:0` and the
+          whole page renders blank — every section is a Reveal.
+
+          That happens for reasons outside our control: the chunk 404s or times
+          out, a proxy/extension blocks it, or the browser is too old to parse
+          the modern syntax Next emits. `<noscript>` does not apply in any of
+          them, because scripting is on.
+
+          `Reveal` stamps `data-reveal-ready` on <html> from an effect, which
+          can only run if React hydrated AND `motion/react` imported. If that
+          has not happened by the deadline, assume it never will and show the
+          content. Losing the animation is a cosmetic failure; a blank
+          marketing page is a total one.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var d=document;function r(){if(d.documentElement.hasAttribute('data-reveal-ready'))return;var s=d.createElement('style');s.appendChild(d.createTextNode('[data-reveal]{opacity:1!important;transform:none!important}'));(d.head||d.documentElement).appendChild(s)}setTimeout(r,4000);window.addEventListener('error',function(e){var t=e&&e.target;if(t&&t.tagName==='SCRIPT'){r()}},true)})();`,
+          }}
+        />
       </head>
       <body className="min-h-screen bg-white text-[color:var(--color-ink)] antialiased">
         {children}
