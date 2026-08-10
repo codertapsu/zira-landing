@@ -12,7 +12,7 @@ export function Footer() {
           <Logo />
         </Reveal>
         <Reveal as="span" direction="fade" delay={0.1}>
-          © 2026 Zira. Quản lý công việc, dự án và nhóm trên Zalo Mini App.
+          © 2026 Zira. Quản lý công việc, dự án và nhóm trên Zalo, Telegram và web.
         </Reveal>
         <div className="flex gap-5">
           <Link

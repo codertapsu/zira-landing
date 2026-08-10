@@ -80,6 +80,15 @@ export function FeatureTour() {
   // +1 for forward (auto-advance or next), -1 for backward (prev).
   // The phone slide direction follows this value.
   const [direction, setDirection] = useState(1);
+  // Explicit choice from the pause/play control: `true` = play, `false` =
+  // pause, `null` = no choice yet, follow `prefers-reduced-motion`. Kept
+  // separate from `hovered` so hovering out never silently resumes a carousel
+  // the user paused.
+  const [userPlayback, setUserPlayback] = useState<boolean | null>(null);
+  const [hovered, setHovered] = useState(false);
+  // Written ONLY by `goTo` (arrows, dots, ArrowLeft/ArrowRight) so the live
+  // region speaks on user action and stays silent through auto-advance.
+  const [announcement, setAnnouncement] = useState("");
   const total = featureTour.length;
   const shouldReduce = useReducedMotion();
 
@@ -98,17 +107,46 @@ export function FeatureTour() {
         else setDirection(normalizedNext > cur ? 1 : -1);
         return normalizedNext;
       });
+      setAnnouncement(
+        `${normalizedNext + 1}/${total}: ${featureTour[normalizedNext].title}`,
+      );
     },
     [total],
   );
 
+  // Auto-advance is motion too, so `prefers-reduced-motion` starts it paused —
+  // derived, not stored, because `useReducedMotion()` is `null` on the server
+  // and only resolves after hydration. An explicit press still wins, so a
+  // reduced-motion user who wants the tour can start it.
+  const paused = userPlayback === null ? shouldReduce === true : !userPlayback;
+  const autoplayPaused = paused || hovered;
+
+  // A self-rescheduling timeout, NOT an interval — `active` is a real
+  // dependency, so every slide change (manual OR automatic) tears the timer
+  // down and grants the new slide a full 6s. Without that, a click could be
+  // stomped by an auto-advance milliseconds later. Do not "optimize" this back
+  // into a `setInterval` with `[total]` deps; that removes the reset.
   useEffect(() => {
-    const timer = window.setInterval(() => {
+    if (autoplayPaused) {
+      return;
+    }
+    const timer = window.setTimeout(() => {
       setDirection(1);
-      setActive((i) => (i + 1) % total);
+      setActive((active + 1) % total);
     }, 6000);
-    return () => window.clearInterval(timer);
-  }, [total]);
+    return () => window.clearTimeout(timer);
+  }, [active, autoplayPaused, total]);
+
+  const togglePlayback = () => {
+    const nextPlaying = paused;
+    setUserPlayback(nextPlaying);
+    if (nextPlaying) {
+      // An explicit press beats the hover/focus pause. The control itself is
+      // focused at this point, so without clearing `hovered` the carousel
+      // would stay frozen until focus left and "play" would look broken.
+      setHovered(false);
+    }
+  };
 
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'ArrowLeft') {
@@ -152,6 +190,10 @@ export function FeatureTour() {
           aria-roledescription="carousel"
           aria-label="Hướng dẫn nhanh các tính năng Zira"
           onKeyDown={onKeyDown}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+          onFocusCapture={() => setHovered(true)}
+          onBlurCapture={() => setHovered(false)}
           delay={0.1}
           className="grid items-center gap-12 rounded-3xl outline-none lg:grid-cols-[1fr_1fr]"
         >
@@ -181,7 +223,16 @@ export function FeatureTour() {
             </AnimatePresence>
           </div>
 
-          <div className="flex flex-col gap-6 lg:max-w-md" aria-live="polite" aria-atomic="true">
+          {/* NOT a live region. When the whole column was `aria-live`, every
+              6s auto-advance interrupted screen-reader users with the full
+              title + description, unprompted — and mid-crossfade both
+              AnimatePresence children exist, so `aria-atomic` could read the
+              old and new text together. Announcements now come from the
+              dedicated sr-only region below, written only on user action.
+              Do not re-add aria-live here, and do not "simplify" the region
+              below into a conditionally-toggled attribute: flipping aria-live
+              at runtime is unreliable across assistive tech. */}
+          <div className="flex flex-col gap-6 lg:max-w-md">
             {/* Fixed-height stacks keep the layout still while the text
                 swaps in/out. Children are absolutely positioned so old
                 and new content can crossfade without pushing the dots
@@ -242,6 +293,20 @@ export function FeatureTour() {
                 >
                   <Icon name="chevron-right" width={20} height={20} />
                 </motion.button>
+                {/* WCAG 2.2.2 "Pause, Stop, Hide": content that auto-updates
+                    for longer than 5s needs a visible mechanism to stop it. */}
+                <motion.button
+                  type="button"
+                  onClick={togglePlayback}
+                  aria-pressed={paused}
+                  aria-label={paused ? 'Tiếp tục trình chiếu' : 'Tạm dừng trình chiếu'}
+                  whileHover={shouldReduce ? undefined : { scale: 1.08 }}
+                  whileTap={shouldReduce ? undefined : { scale: 0.92 }}
+                  transition={{ duration: 0.15, ease: EASE }}
+                  className="grid h-10 w-10 place-items-center rounded-full bg-[#e9fffa] text-[color:var(--color-brand-500)] transition-colors duration-150 hover:bg-[#d3f4ed]"
+                >
+                  <Icon name={paused ? 'play' : 'pause'} width={18} height={18} />
+                </motion.button>
               </div>
 
               <div className="flex items-center gap-2" role="tablist" aria-label="Chọn tính năng">
@@ -261,6 +326,11 @@ export function FeatureTour() {
                   />
                 ))}
               </div>
+            </div>
+
+            {/* User-initiated changes only — see the note on the text column. */}
+            <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+              {announcement}
             </div>
           </div>
         </Reveal>

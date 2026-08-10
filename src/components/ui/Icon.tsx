@@ -17,6 +17,7 @@ type IconName =
   | "phone"
   | "menu"
   | "play"
+  | "pause"
   | "mail"
   | "building"
   | "car"
@@ -188,6 +189,12 @@ const paths: Record<IconName, ReactElement> = {
       strokeWidth="1.5"
       strokeLinejoin="round"
     />
+  ),
+  pause: (
+    <g fill="currentColor">
+      <rect x="7" y="5" width="3.5" height="14" rx="1" />
+      <rect x="13.5" y="5" width="3.5" height="14" rx="1" />
+    </g>
   ),
   mail: (
     <g

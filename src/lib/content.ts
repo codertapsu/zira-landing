@@ -58,7 +58,7 @@ export const readyToRideFeatures: FeatureItem[] = [
     number: "03",
     title: "Đồng bộ trên mọi thiết bị",
     description:
-      "Dùng trên điện thoại trong Zalo Mini App hoặc mở trên trình duyệt — dữ liệu luôn thống nhất.",
+      "Dùng trên điện thoại trong Zalo Mini App, Telegram Mini App hoặc mở trên trình duyệt — dữ liệu luôn thống nhất.",
     icon: "car",
   },
 ];
@@ -81,7 +81,7 @@ export const featureTour: FeatureTourSlide[] = [
   {
     title: "Bắt đầu nhanh chỉ với một chạm",
     description:
-      "Người dùng Zalo mới mở Zira lần đầu thấy hướng dẫn rõ ràng và có thể tạo công việc trong vài giây.",
+      "Người dùng Zalo hoặc Telegram mở Zira lần đầu thấy hướng dẫn rõ ràng và có thể tạo công việc trong vài giây.",
     imageKey: "002",
     alt: "Màn hình chào mừng Zira dành cho người dùng khách trên Zalo Mini App",
   },
@@ -123,7 +123,7 @@ export const featureTour: FeatureTourSlide[] = [
   {
     title: "Kiểm soát thông báo, không bị quấy rầy",
     description:
-      "Chọn loại thông báo nhận được trong Zalo, qua bot Zalo OA, email — và đặt giờ yên tĩnh.",
+      "Chọn loại thông báo nhận được trong ứng dụng, qua bot Zalo OA, bot Telegram, email — và đặt giờ yên tĩnh.",
     imageKey: "008",
     alt: "Trang cài đặt thông báo Zira với các kênh và giờ yên tĩnh",
   },

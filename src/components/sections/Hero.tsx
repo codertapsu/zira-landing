@@ -20,7 +20,7 @@ export function Hero() {
           </Reveal>
 
           <Reveal as="p" delay={0.1} className="mx-auto max-w-md text-sm leading-relaxed text-[color:var(--color-ink-soft)] lg:mx-0">
-            Zira giúp bạn tổ chức nhiệm vụ, dự án, lịch họp, ghi chú và báo cáo — dùng trên Zalo Mini App hoặc trình duyệt, không cần cài đặt thêm ứng dụng nào.
+            Zira giúp bạn tổ chức nhiệm vụ, dự án, lịch họp, ghi chú và báo cáo — dùng trên Zalo Mini App, Telegram Mini App hoặc trình duyệt, không cần cài đặt thêm ứng dụng nào.
           </Reveal>
 
           <Reveal delay={0.2} className="flex flex-col items-center gap-3 sm:flex-row sm:gap-4 lg:justify-start">

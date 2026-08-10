@@ -1,11 +1,11 @@
 import Image from "next/image";
 import type { StaticImageData } from "next/image";
 
-import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Icon } from "@/components/ui/Icon";
 import { PhoneMockup } from "@/components/ui/PhoneMockup";
 import { Reveal } from "@/components/ui/Reveal";
+import { TrackedButton } from "@/components/ui/TrackedButton";
 import { downloadCta, type DownloadChannelKey } from "@/lib/content";
 
 import fifthImage from "@/assets/images/005.png";
@@ -79,10 +79,24 @@ export function DownloadCTA() {
                     className="aspect-square h-auto w-full max-w-[140px] object-contain"
                   />
 
-                  <Button href={channel.href} variant="primary" size="sm" className="w-full">
+                  {/* `href` is untouched on purpose: the QR PNG above encodes
+                      exactly this string, so any query-param tweak would have
+                      to ship a regenerated PNG in the same change. Attribution
+                      is measured with a GA4 event instead. */}
+                  <TrackedButton
+                    href={channel.href}
+                    variant="primary"
+                    size="sm"
+                    className="w-full"
+                    event="cta_click"
+                    eventParams={{
+                      cta_channel: channel.key,
+                      cta_location: "download",
+                    }}
+                  >
                     {channel.action}
                     <Icon name="arrow-up-right" width={14} height={14} />
-                  </Button>
+                  </TrackedButton>
                 </Reveal>
               ))}
             </div>

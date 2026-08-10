@@ -21,9 +21,13 @@ const roboto = Roboto({
 // `zira.top/`. The server mounts the static export at the origin root
 // (see `zira-server/apps/api-gateway/src/main.ts`).
 const siteUrl = 'https://zira.top';
-const title = 'Zira — Quản lý công việc, dự án và nhóm trên Zalo Mini App và web';
+const title = 'Zira — Quản lý công việc, dự án và nhóm trên Zalo, Telegram và web';
 const description =
-  'Zira giúp bạn quản lý công việc, dự án, nhiệm vụ, lịch, ghi chú và báo cáo trực quan. Dùng trên Zalo Mini App hoặc trình duyệt tại zira.top/app — đơn giản, nhanh, không cần cài đặt.';
+  'Zira giúp bạn quản lý công việc, dự án, nhiệm vụ, lịch, ghi chú và báo cáo trực quan. Dùng trên Zalo Mini App, Telegram Mini App hoặc trình duyệt tại zira.top/app — đơn giản, nhanh, không cần cài đặt.';
+// Alt text for the shared OG/Twitter preview image. Names both messaging
+// shells the app ships in, so the preview matches what the download row offers.
+const previewImageAlt =
+  'Zira — Mini App quản lý công việc, dự án và nhóm trên Zalo và Telegram';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -37,6 +41,7 @@ export const metadata: Metadata = {
   keywords: [
     'Zira',
     'Zalo Mini App',
+    'Telegram Mini App',
     'quản lý công việc',
     'quản lý dự án',
     'quản lý nhiệm vụ',
@@ -51,6 +56,8 @@ export const metadata: Metadata = {
     'Trello tiếng Việt',
     'Jira tiếng Việt',
     'quản lý đội nhóm trên Zalo',
+    'quản lý công việc trên Telegram',
+    'bot Telegram quản lý công việc',
   ],
   authors: [{ name: 'Zira' }],
   creator: 'Zira',
@@ -76,7 +83,7 @@ export const metadata: Metadata = {
         type: 'image/png',
         width: 1920,
         height: 1008,
-        alt: 'Zira — Zalo Mini App quản lý công việc, dự án và nhóm',
+        alt: previewImageAlt,
       },
     ],
   },
@@ -87,7 +94,7 @@ export const metadata: Metadata = {
     images: [
       {
         url: `${siteUrl}/og-image.png`,
-        alt: 'Zira — Zalo Mini App quản lý công việc, dự án và nhóm',
+        alt: previewImageAlt,
         width: 1920,
         height: 1008,
       },
