@@ -22,6 +22,7 @@ type IconName =
   | "building"
   | "car"
   | "send"
+  | "check"
   | "quote";
 
 interface IconProps extends SVGProps<SVGSVGElement> {
@@ -252,6 +253,16 @@ const paths: Record<IconName, ReactElement> = {
       <path d="M21 3L3 10.5l6 2.5 2.5 6L21 3z" />
       <path d="M9 13l4-4" />
     </g>
+  ),
+  check: (
+    <path
+      d="M20 6L9 17l-5-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   ),
 };
 

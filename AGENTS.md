@@ -48,11 +48,40 @@ This repo uses Next.js 16.2.11 with React 19.2.8 (`package.json`). APIs, file co
   `DownloadCTA`. Each channel's `key` maps to a QR PNG in `DownloadCTA.tsx`'s `qrByKey`,
   and that PNG encodes exactly the channel's `href` — change one, regenerate the other.
 - `testimonials` — 6 quotes for `Testimonials` (currently not mounted in `page.tsx`).
+- `pricing` / `pricingFeatureLabels` — copy AROUND the pricing cards, and the Vietnamese
+  names for the server's feature keys. The plans themselves are NOT here; see "Live data" below.
 - `privacyPolicy` / `termsOfService` — `LegalDocument` bodies rendered by `LegalPage` at `/privacy` and `/terms`. Both share the `CONTACT_EMAIL` and `LAST_UPDATED` constants at the top of the legal block — bump `LAST_UPDATED` whenever you edit either document's `sections`.
 
 Components must read from `content.ts`. Don't inline Vietnamese strings in JSX unless they're fixed UI affordances (aria-labels, button micro-copy) that wouldn't change in a content rewrite.
 
 The whole site is `lang="vi-VN"`. English content is not currently translated — `alternateLocale: ['en_US']` in OG metadata is aspirational.
+
+## Live data: the pricing catalogue
+
+`#pricing` is the one section rendered from the API instead of from `content.ts`. Admins and
+staff toggle plan prices and features at runtime, so a hardcoded table would be wrong the moment
+somebody edits a plan.
+
+- Source: `GET /api/v1/subscription-plans/public` (zira-server,
+  `modules/subscriptions/controllers/public-subscription-plans.controller.ts`). Anonymous,
+  IP rate-limited 60/min, `Cache-Control: public, max-age=60`. Payload is the gateway envelope
+  `{ success, data: { visible, items } }`.
+- **Keep the URL relative.** The gateway serves this static export at the origin root and mounts
+  it before `setGlobalPrefix('api')` with `fallthrough: true`, so `/api/*` reaches Nest from the
+  same origin — no CORS, nothing environment-specific to configure. An absolute URL would need a
+  `CORS_ORIGINS` entry and would break the Firebase mirror differently.
+- **`output: "export"` still holds.** The fetch runs in the BROWSER from a client component
+  (`PricingPlans.tsx`); no server-only Next API is involved.
+- **The fallback is the DEFAULT state, not an error branch.** `catalogue` starts `null`, so the
+  static HTML contains the fallback prose (`pricing.fallbackTitle` / `fallbackDescription`) and a
+  CTA. It is replaced only by a successful response with at least one plan. No JS, a failed or
+  rate-limited request, a malformed payload and an empty list all land in the same place. Never
+  add a state that renders an empty table or a stuck skeleton.
+- **Prices are in the smallest currency unit.** VND has no minor unit — do not divide.
+  `formatPlanPrice` keys off a zero-decimal currency list.
+- **Feature names live here, not on the server.** The endpoint publishes keys; `pricingFeatureLabels`
+  maps them to Vietnamese. A key with no entry is skipped on purpose — that hides internal rollout
+  gates (`*_native` / `*_cross`) and stops a newly-added server flag from printing raw snake_case.
 
 ## Adding a section
 
@@ -84,9 +113,12 @@ Applies to every AI tool in this repo (Claude Code, Codex/`AGENTS.md`, Copilot, 
   - Wrong: `className="bg-[#0a7cff]"` — a hard-coded hex that drifts from the SPA.
   - Right: `className="bg-[color:var(--color-brand-500)]"`, the house form used throughout `src/components/ui/Button.tsx`.
   - Pre-existing raw hex survives in `Testimonials.tsx` (unmounted) and one `FeatureTour.tsx` swatch. Don't copy them, and don't bulk-refactor them as part of unrelated work.
+- **Don't hardcode plans, prices, or a feature table in `content.ts`.** The pricing section reads
+  the live catalogue; see "Live data: the pricing catalogue". Copy around it belongs in
+  `content.ts` as usual.
 - **New route ⇒ register it.** Add the URL to `src/app/sitemap.ts` (currently `/`, `/privacy`, `/terms`) and set `alternates.canonical` in that page's `metadata`, following `src/app/privacy/page.tsx`. `trailingSlash: true` means the emitted file is `out/<route>/index.html`.
 - **Never paste or commit secrets.** No API keys, tokens, or credentials in source, docs, or commit messages, and don't read or edit `.env*`. The Firebase config in `src/lib/analytics.ts` is a public client identifier, not a counterexample — anything server-side (deploy keys, `WEB_LANDING_DIST_DIR` hosts, gateway env) stays out of the repo.
-- **Verify before claiming done:** `npm run lint && npm run build`, then confirm `out/index.html` still contains the three JSON-LD blocks and that `out/robots.txt` and `out/sitemap.xml` exist.
+- **Verify before claiming done:** `npm run lint && npm run build`, then confirm `out/index.html` still contains the three JSON-LD blocks, that the pricing fallback copy is present in that HTML (it proves the no-JS path), and that `out/robots.txt` and `out/sitemap.xml` exist.
 - **`CLAUDE.md` and `AGENTS.md` must stay aligned.** `CLAUDE.md` is Claude Code's memory, `AGENTS.md` is the Codex/OpenAI entry point; they carry the same rules. Change one, change the other in the same commit. `ARCHITECTURE.md` is the deeper narrative reference — don't duplicate it here.
 
 ## Style
@@ -102,6 +134,8 @@ Applies to every AI tool in this repo (Claude Code, Codex/`AGENTS.md`, Copilot, 
 - Don't add images via `next/image` with `<Image fill>` against unknown dimensions — `images.unoptimized: true` means there's no loader to fall back on.
 - Don't inline Vietnamese strings in section components — put them in `src/lib/content.ts`.
 - Don't bypass `Reveal` for new scroll animations; the no-JS fallback only triggers on elements with `data-reveal`.
+- Don't wrap late-arriving (fetched) content in `Reveal` — a `Reveal` that mounts outside the
+  viewport holds `opacity: 0`, and the `layout.tsx` watchdog only covers page load.
 
 ## Cross-repo references
 

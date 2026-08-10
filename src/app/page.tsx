@@ -4,6 +4,7 @@ import { Footer } from "@/components/sections/Footer";
 import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/Hero";
 import { HowItWorks } from "@/components/sections/HowItWorks";
+import { Pricing } from "@/components/sections/Pricing";
 import { ReadyToRide } from "@/components/sections/ReadyToRide";
 import { WatchVideo } from "@/components/sections/WatchVideo";
 import { downloadCta } from "@/lib/content";
@@ -109,6 +110,7 @@ export default function HomePage() {
         <HowItWorks />
         <ReadyToRide />
         <FeatureTour />
+        <Pricing />
         <DownloadCTA />
       </main>
       <Footer />

@@ -2,6 +2,7 @@ export const navLinks = [
   { label: "Tính năng", href: "#how-it-works" },
   { label: "Công cụ", href: "#ready-to-ride" },
   { label: "Giao diện", href: "#feature-tour" },
+  { label: "Bảng giá", href: "#pricing" },
   { label: "Mở Mini App", href: "#download" },
 ] as const;
 
@@ -233,6 +234,110 @@ export const downloadCta: DownloadCtaCopy = {
       qrAlt: "Mã QR quét bằng điện thoại để mở Zira Mini App trong Telegram",
     },
   ],
+};
+
+// ---------------------------------------------------------------------------
+// Pricing (#pricing).
+//
+// The plan CARDS are not in this file on purpose. Admins and staff toggle each
+// plan's price and features at runtime from the admin console, so a hardcoded
+// table here would be a lie the moment somebody edits a plan. The section
+// renders the live catalogue from
+// `GET /api/v1/subscription-plans/public` (see `src/lib/pricing.ts`); only the
+// copy AROUND that data — and the Vietnamese names for the feature keys —
+// lives here.
+// ---------------------------------------------------------------------------
+
+export interface PricingCopy {
+  eyebrow: string;
+  heading: string;
+  description: string;
+  /** Shown in place of a formatted price when `priceAmount` is 0. */
+  freePrice: string;
+  /** Price suffix when the plan's default duration is one month. */
+  perMonth: string;
+  /**
+   * Price suffix when the default duration is more than one month.
+   * `{months}` is replaced with the number by the component.
+   */
+  perMonthsTemplate: string;
+  /** Small label above each card's feature list. */
+  featuresHeading: string;
+  /** Note under the grid when in-app purchasing is switched ON. */
+  purchaseOnNote: string;
+  /** Note under the grid when in-app purchasing is switched OFF. */
+  purchaseOffNote: string;
+  ctaLabel: string;
+  ctaHref: string;
+  /**
+   * The card rendered INSTEAD of the grid whenever the live catalogue is not
+   * available: no JavaScript, the request failed or timed out, the payload did
+   * not match the contract, or the catalogue came back empty. It is also the
+   * server-rendered state, so this copy — never an empty table — is what sits
+   * in the static HTML and what a crawler reads.
+   */
+  fallbackTitle: string;
+  fallbackDescription: string;
+}
+
+export const pricing: PricingCopy = {
+  eyebrow: "Bảng giá",
+  heading: "Bắt đầu miễn phí, nâng cấp khi nhóm lớn hơn",
+  description:
+    "Zira miễn phí cho những việc hằng ngày. Khi nhóm cần thêm trợ lý AI, thông báo qua bot hay bản vẽ cộng tác, bạn có thể nâng cấp lên gói phù hợp.",
+  freePrice: "Miễn phí",
+  perMonth: "/tháng",
+  perMonthsTemplate: "/{months} tháng",
+  featuresHeading: "Bao gồm",
+  purchaseOnNote:
+    "Bạn có thể nâng cấp ngay trong ứng dụng và đổi gói bất cứ lúc nào.",
+  purchaseOffNote:
+    "Việc nâng cấp gói hiện được kích hoạt thủ công. Mở Zira và liên hệ với chúng tôi để được hỗ trợ chọn gói phù hợp.",
+  ctaLabel: "Mở Zira để bắt đầu",
+  ctaHref: "#download",
+  fallbackTitle: "Zira có bản miễn phí và các gói nâng cấp",
+  fallbackDescription:
+    "Bảng giá chi tiết luôn được cập nhật trong ứng dụng. Mở Zira để xem các gói hiện có và những gì mỗi gói mở khoá cho nhóm của bạn.",
+};
+
+/**
+ * Vietnamese names for the feature keys the catalogue returns.
+ *
+ * The endpoint publishes KEYS, not display copy — its own DTO says so
+ * ("Keys only; display copy belongs to the consuming surface") — because the
+ * same key feeds the app UI, the admin console and this page, each of which
+ * words it differently. So the marketing wording is owned here, where the rest
+ * of the Vietnamese copy lives, instead of being pushed into a database column
+ * an admin would have to write marketing copy into.
+ *
+ * The declaration ORDER is the render order, so every card lists its features
+ * in the same sequence and the cards can be read side by side.
+ *
+ * A key that is NOT in this map is not rendered. That covers two cases, both
+ * deliberate:
+ *   - Internal rollout gates that are not product features and would be
+ *     meaningless to a visitor: `project_chatbot_native`,
+ *     `project_chatbot_cross`, `telegram_project_chatbot_native`,
+ *     `telegram_project_chatbot_cross`.
+ *   - A flag added on the server after this file was last touched. Skipping it
+ *     costs one unlisted bullet; rendering it would print a raw snake_case
+ *     identifier on a marketing page. Add the key here when the feature is
+ *     ready to be sold.
+ */
+export const pricingFeatureLabels: Record<string, string> = {
+  quick_create: "Tạo việc nhanh bằng AI",
+  ai_assistant: "Trợ lý AI hỗ trợ công việc",
+  voice_capture: "Ghi chú bằng giọng nói",
+  drawings: "Bản vẽ cộng tác nhiều người",
+  approvals: "Luồng duyệt yêu cầu",
+  team_summary: "Tổng hợp hoạt động của nhóm",
+  smart_notifications: "Thông báo thông minh",
+  zalo_bot_notifications: "Thông báo qua bot Zalo",
+  telegram_bot_notifications: "Thông báo qua bot Telegram",
+  project_chatbot: "Kết nối dự án với nhóm Zalo",
+  telegram_project_chatbot: "Kết nối dự án với nhóm Telegram",
+  account_linking: "Liên kết tài khoản Zalo và Telegram",
+  web_qr_login: "Đăng nhập trên web bằng mã QR",
 };
 
 export type TestimonialAccent =
