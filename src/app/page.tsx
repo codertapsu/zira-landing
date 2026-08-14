@@ -46,17 +46,28 @@ const softwareJsonLd = {
     "Đồng bộ giữa Zalo Mini App, Telegram Mini App và trình duyệt",
   ],
   // Zira is free to start and has paid plans on top, so a single `Offer` at
-  // price 0 would misstate the catalogue. The bounds mirror the seeded
-  // `subscription_plans` rows (Free 0 → Business 499000 VND); the internal
-  // `custom` backfill tier is deliberately excluded — it is not a public plan.
-  // NOTE: admins can change prices at runtime and this is a static export, so
-  // nothing keeps these bounds in sync automatically. Re-check on price changes.
+  // price 0 would misstate the catalogue.
+  //
+  // `lowPrice` ONLY, deliberately. `highPrice` and `offerCount` used to be
+  // hardcoded here mirroring the seeded rows, with a note asking whoever
+  // changed a price to remember to update them. That did not survive contact:
+  // the markup claimed a 499000 VND ceiling long after the top plan moved to
+  // 399000, so the structured data advertised a price no plan had.
+  //
+  // There is no mechanism that could keep them accurate. Prices are
+  // admin-editable at runtime (the plan form writes them, and `#pricing` reads
+  // the live catalogue in the browser), while this page is a static export
+  // built once. Schema.org requires only `lowPrice` on an AggregateOffer, and
+  // that one IS stable: the Free plan is the entitlement floor the server's
+  // resolver depends on, so a 0 VND tier does not disappear.
+  //
+  // Absent structured data beats confidently wrong structured data — a
+  // mismatch between markup and page content is what gets a rich result
+  // suppressed.
   offers: {
     "@type": "AggregateOffer",
     priceCurrency: "VND",
     lowPrice: "0",
-    highPrice: "499000",
-    offerCount: 4,
     availability: "https://schema.org/InStock",
   },
   publisher: {
