@@ -10,9 +10,9 @@
     "deploy:firebase": "next build && firebase deploy --only hosting:landing"
   },
   "dependencies": {
-    "firebase": "12.17.1",
-    "motion": "12.42.2",
-    "next": "16.3.0",
+    "firebase": "12.18.0",
+    "motion": "13.1.1",
+    "next": "16.3.1",
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },
@@ -22,7 +22,7 @@
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.4",
     "eslint": "10.8.1",
-    "eslint-config-next": "16.3.0",
+    "eslint-config-next": "16.3.1",
     "tailwindcss": "4.3.3",
     "typescript": "6.0.3"
   },
@@ -30,7 +30,7 @@
     "node": ">=24.18.0",
     "npm": ">=12.0.0"
   },
-  "packageManager": "npm@12.0.1",
+  "packageManager": "npm@12.0.2",
   "browserslist": [
     ">0.3% in VN",
     "last 4 versions",
