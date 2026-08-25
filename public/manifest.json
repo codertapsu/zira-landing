@@ -1,7 +1,7 @@
 {
   "name": "Zira",
   "short_name": "Zira",
-  "description": "Zalo Mini App quản lý công việc, dự án, lịch và báo cáo cho đội nhóm.",
+  "description": "Quản lý công việc, dự án, lịch và báo cáo cho đội nhóm — trên Zalo, Telegram và web.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
